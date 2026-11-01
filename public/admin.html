@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KOCHI DESIGN & AI SUMMIT — Admin Command Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme-tokens.css">
+  <script src="whitelabel.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-primary);
+      background: #F4F5F7;
+      color: #111827;
+      display: flex;
+      min-height: 100vh;
+    }
+    aside.admin-sidebar {
+      width: 250px;
+      background: var(--brand-dark);
+      color: #FFFFFF;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .sidebar-brand-title {
+      font-family: var(--font-accent);
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    .sidebar-brand-title span { color: var(--brand-primary); }
+    .nav-item {
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      color: #CBD5E1;
+    }
+    .nav-item.active, .nav-item:hover {
+      background: var(--brand-primary);
+      color: #FFFFFF;
+    }
+    main {
+      flex: 1;
+      padding: 28px;
+      overflow-y: auto;
+    }
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .kpi-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 8px;
+      padding: 18px;
+    }
+    .kpi-label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #64748B; }
+    .kpi-val { font-size: 24px; font-weight: 700; margin: 6px 0 4px; color: #0F172A; }
+    .kpi-delta { font-size: 11px; font-weight: 600; color: var(--brand-primary); }
+    .card-box {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { text-align: left; padding: 12px 10px; border-bottom: 1px solid #E2E8F0; }
+    th { font-size: 11px; text-transform: uppercase; color: #64748B; }
+    .status-pill {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      background: #FEF3EE;
+      color: var(--brand-primary);
+    }
+    .btn-sm {
+      background: var(--brand-primary);
+      color: #FFF;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    @media (max-width: 860px) {
+      body { flex-direction: column; }
+      aside.admin-sidebar { width: 100%; }
+      .kpi-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <aside class="admin-sidebar">
+    <div class="sidebar-brand-title">KOCHI DESIGN & AI SUMMIT <span>Hub</span></div>
+    <div class="nav-item active">📊 Pipeline & Operations</div>
+    <div class="nav-item" onclick="window.location.href='index.html'">👁️ View Public Showcase</div>
+    <div style="margin-top:auto;padding-top:16px;border-top:1px solid rgba(255,255,255,0.12);font-size:11px;color:#94A3B8;">
+      WhatsApp Target:
+      <input type="text" id="adminWaInput" data-wl-wa value="919061902295" style="width:100%;margin-top:6px;padding:6px;border-radius:4px;border:none;font-size:12px;">
+    </div>
+  </aside>
+
+  <main>
+    <div class="top-bar">
+      <div>
+        <div class="mobile-brand" style="font-size:12px;font-weight:700;color:var(--brand-primary);text-transform:uppercase;">KOCHI DESIGN & AI SUMMIT</div>
+        <h1 style="font-size:22px;">Event Box Office & Live Gate QR Check-In Scanner</h1>
+      </div>
+      <a href="index.html" class="btn-sm">← Back to Customer View</a>
+    </div>
+
+    <div class="kpi-grid">
+      
+        <div class="kpi-card">
+          <div class="kpi-label">Total Passes Issued</div>
+          <div class="kpi-val">742 / 850</div>
+          <div class="kpi-delta">87% Capacity</div>
+        </div>
+      
+        <div class="kpi-card">
+          <div class="kpi-label">Gate Checked-In Live</div>
+          <div class="kpi-val">618 Scanned</div>
+          <div class="kpi-delta">Zero Duplicate Scans</div>
+        </div>
+      
+        <div class="kpi-card">
+          <div class="kpi-label">Ticket Box Office GMV</div>
+          <div class="kpi-val">₹22.4 Lakhs</div>
+          <div class="kpi-delta">Cashfree Instant Settle</div>
+        </div>
+      
+        <div class="kpi-card">
+          <div class="kpi-label">VIP Speaker Dinner</div>
+          <div class="kpi-val">42 / 50 Confirmed</div>
+          <div class="kpi-delta">8 Seats Left</div>
+        </div>
+      
+    </div>
+
+    <div class="card-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <h2 style="font-size:16px;">Live Incoming Leads, Bookings & Selections</h2>
+        <button class="btn-sm" onclick="addQuickEntry()">+ New Counter / Manual Entry</button>
+      </div>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Client / Prospect</th>
+              <th>Configuration / Notes</th>
+              <th>Value</th>
+              <th>Status</th>
+              <th>WhatsApp Action</th>
+            </tr>
+          </thead>
+          <tbody id="leadsTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const SEED_LEADS = [
+  {
+    "id": "KDS-8841",
+    "name": "Adithyan B. Raj (Founder, Studio Arsenal)",
+    "phone": "919061902295",
+    "detail": "VIP Founder Pass • QR Signed [SHA256-OK] • Seat A-01",
+    "status": "CHECKED IN // GATE 1",
+    "amount": "₹6,999"
+  },
+  {
+    "id": "KDS-8842",
+    "name": "Devika Krishnan (Lead Product Designer)",
+    "phone": "919847012345",
+    "detail": "Pro All-Access + Workshop Pass • QR Signed [SHA256-OK]",
+    "status": "QR TICKET ACTIVE",
+    "amount": "₹3,499"
+  },
+  {
+    "id": "KDS-8843",
+    "name": "Team Zerodha Design (Group of 5)",
+    "phone": "919880112233",
+    "detail": "5x Pro Workshop Passes (15% Group Discount Applied)",
+    "status": "CHECKED IN // VIP GATE",
+    "amount": "₹14,870"
+  }
+];
+
+    function getLeads() {
+      try {
+        const local = JSON.parse(localStorage.getItem('bmad_leads_tpl-land-event-pass') || '[]');
+        return [...local, ...SEED_LEADS];
+      } catch (e) {
+        return SEED_LEADS;
+      }
+    }
+
+    function renderLeads() {
+      const rows = getLeads();
+      const tbody = document.getElementById('leadsTableBody');
+      tbody.innerHTML = rows.map((r, idx) => `
+        <tr>
+          <td><strong>${r.id}</strong></td>
+          <td>${r.name}<br><span style="font-size:11px;color:#64748B;">+${r.phone}</span></td>
+          <td>${r.detail}</td>
+          <td><strong>${r.amount}</strong></td>
+          <td><span class="status-pill" onclick="cycleStatus(${idx})" style="cursor:pointer;" title="Click to advance status">${r.status}</span></td>
+          <td>
+            <a class="btn-sm" target="_blank" href="https://wa.me/${String(r.phone).replace(/[^0-9]/g,'')}?text=${encodeURIComponent('Hello ' + r.name + ', following up regarding ' + r.id + ' (' + r.detail + ')')}">
+              💬 WhatsApp
+            </a>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function addQuickEntry() {
+      const name = prompt('Client Name:');
+      if (!name) return;
+      const detail = prompt('Requirement / Unit / Package:', 'Standard 2-Day Conference Pass');
+      const amount = prompt('Estimated Value:', '₹45,000');
+      const local = JSON.parse(localStorage.getItem('bmad_leads_tpl-land-event-pass') || '[]');
+      local.unshift({
+        id: 'ADM-' + Math.floor(1000 + Math.random() * 9000),
+        name,
+        phone: document.getElementById('adminWaInput').value || '919061902295',
+        detail: detail || 'Walk-in Inquiry',
+        amount: amount || '₹0',
+        status: 'APPROVED'
+      });
+      localStorage.setItem('bmad_leads_tpl-land-event-pass', JSON.stringify(local));
+      renderLeads();
+    }
+
+    renderLeads();
+  </script>
+</body>
+</html>

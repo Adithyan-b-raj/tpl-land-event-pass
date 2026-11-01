@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KOCHI DESIGN & AI SUMMIT — Landing Page Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme-tokens.css">
+  <script src="whitelabel.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-primary);
+      background-color: var(--bg-main);
+      color: #F8FAFC;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    .top-bar {
+      background: var(--bg-canvas);
+      color: #F8FAFC;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 8px 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(9, 10, 15, 0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .nav-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand-logo {
+      font-family: var(--font-accent);
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #F8FAFC;
+      text-decoration: none;
+    }
+    .brand-logo span {
+      font-family: var(--font-primary);
+      color: var(--color-primary);
+      font-size: 12px;
+      letter-spacing: 2px;
+      display: block;
+      margin-top: -2px;
+    }
+    nav.desktop-nav {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    nav.desktop-nav a {
+      color: #F8FAFC;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+    nav.desktop-nav a:hover { color: var(--color-primary); }
+    .btn-primary {
+      background: var(--color-primary);
+      color: #FFFFFF;
+      border: none;
+      padding: 12px 22px;
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s var(--ease-out-expo), opacity 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); opacity: 0.94; }
+    .btn-outline {
+      background: transparent;
+      color: #F8FAFC;
+      border: 1px solid var(--border-color);
+      padding: 12px 22px;
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .hero-banner {
+      padding: 72px 24px 64px;
+      max-width: 1240px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .hero-pill {
+      display: inline-block;
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-color);
+      color: var(--color-primary);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+    .hero-banner h1 {
+      font-family: var(--font-accent);
+      font-size: clamp(34px, 5vw, 62px);
+      line-height: 1.08;
+      margin-bottom: 18px;
+      letter-spacing: -0.5px;
+    }
+    .hero-banner p {
+      font-size: 17px;
+      color: #94A3B8;
+      max-width: 680px;
+      margin: 0 auto 28px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .section-wrap {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 48px 24px;
+    }
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .section-head h2 {
+      font-family: var(--font-accent);
+      font-size: 30px;
+    }
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--grid-gap-desktop);
+    }
+    .bento-card {
+      background: #121521;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s var(--ease-out-expo), border-color 0.25s;
+    }
+    .bento-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--color-primary);
+    }
+    .bento-img-wrap {
+      height: 220px;
+      position: relative;
+      background: var(--bg-canvas);
+      overflow: hidden;
+    }
+    .bento-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s var(--ease-out-expo);
+    }
+    .bento-card:hover .bento-img-wrap img { transform: scale(1.04); }
+    .bento-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--color-primary);
+      color: #FFF;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      padding: 4px 9px;
+      border-radius: var(--radius);
+      text-transform: uppercase;
+    }
+    .bento-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .bento-code {
+      font-size: 11px;
+      color: #94A3B8;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .bento-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .bento-sub {
+      font-size: 13px;
+      color: #94A3B8;
+      margin-bottom: 16px;
+      flex: 1;
+    }
+    .bento-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-color);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+    /* Interactive Calculator Box */
+    .calc-panel {
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 36px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+    .slider-group { margin-bottom: 20px; }
+    .slider-group label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .slider-group input[type="range"] {
+      width: 100%;
+      accent-color: var(--color-primary);
+      cursor: pointer;
+    }
+    .calc-result-card {
+      background: #121521;
+      border: 2px solid var(--color-primary);
+      border-radius: var(--radius);
+      padding: 28px;
+      text-align: center;
+    }
+    .calc-result-val {
+      font-family: var(--font-accent);
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin: 8px 0 16px;
+    }
+    /* Lead Capture Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.68);
+      backdrop-filter: blur(4px);
+      z-index: 900;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: #121521;
+      color: #F8FAFC;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      max-width: 500px;
+      width: 100%;
+      padding: 28px;
+      position: relative;
+    }
+    .form-field { margin-bottom: 14px; }
+    .form-field label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+      color: #94A3B8;
+    }
+    .form-field input, .form-field select, .form-field textarea {
+      width: 100%;
+      padding: 10px 12px;
+      background: var(--bg-main);
+      color: #F8FAFC;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 14px;
+    }
+    .wa-float-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 20px;
+      width: 52px;
+      height: 52px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+      z-index: 500;
+      text-decoration: none;
+      color: #FFF;
+      font-size: 24px;
+    }
+    .admin-pill-floating {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      background: var(--color-dark);
+      color: #FFF;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      z-index: 500;
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+    @media (max-width: 860px) {
+      .bento-grid { grid-template-columns: 1fr; gap: var(--grid-gap-mobile); }
+      .calc-panel { grid-template-columns: 1fr; padding: 22px; }
+      nav.desktop-nav { display: none; }
+      .admin-pill-floating { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">NOV 14–15, 2026 // GRAND HYATT BOLGATTY ISLAND, KOCHI // 850+ ATTENDEES</div>
+
+  <header>
+    <div class="nav-container">
+      <a href="#" class="brand-logo">KOCHI DESIGN & AI SUMMIT</a>
+      <nav class="desktop-nav">
+        <a href="#showcase">Showcase</a>
+        <a href="#calculator">Interactive Calculator</a>
+        <a href="admin.html">Admin Command Center</a>
+      </nav>
+      <button class="btn-primary" onclick="openLeadModal()">Book Pass & Generate Instant QR Ticket</button>
+    </div>
+  </header>
+
+  <section class="hero-banner">
+    <span class="hero-pill">NOV 14–15, 2026 // GRAND HYATT BOLGATTY ISLAND, KOCHI // 850+ ATTENDEES</span>
+    <h1 data-wl-brand>KOCHI DESIGN & AI SUMMIT</h1>
+    <p data-wl-tagline>2 Days of Design Engineering, Edge AI & Creative Coding — Nov 14–15 at Grand Hyatt Bolgatty.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="openLeadModal()">Book Pass & Generate Instant QR Ticket</button>
+      <a href="#calculator" class="btn-outline">Explore 2-Day Agenda</a>
+    </div>
+  </section>
+
+  <section class="section-wrap" id="showcase">
+    <div class="section-head">
+      <div>
+        <h2>Keynote Speakers, Workshops & Pass Tiers</h2>
+        <p style="font-size:14px;color:#94A3B8;">Click any card to pre-fill your custom inquiry or selection.</p>
+      </div>
+      <div id="drawerWaText" style="font-size:12px;color:#94A3B8;">WhatsApp: +91 90619 02295</div>
+    </div>
+
+    <div class="bento-grid" id="bentoGrid"></div>
+  </section>
+
+  <section class="section-wrap" id="calculator">
+    <div class="calc-panel">
+      <div>
+        <h2 style="font-family:var(--font-accent);font-size:28px;margin-bottom:8px;">Group & Team Pass Calculator + Instant QR E-Ticket Generator</h2>
+        <p style="font-size:14px;color:#94A3B8;margin-bottom:24px;">Book 3+ passes for your agency or engineering team and unlock automatic 15% Group Discount.</p>
+
+        <div class="slider-group">
+          <label>
+            <span>Number of Attendee Passes</span>
+            <strong id="valSliderA" style="color:var(--color-primary);">3</strong>
+          </label>
+          <input type="range" id="sliderA" min="1" max="25" value="3" oninput="recalc()">
+        </div>
+
+        <div class="slider-group">
+          <label>
+            <span>Pass Tier (1=Standard ₹1999, 2=Pro ₹3499, 3=VIP ₹6999)</span>
+            <strong id="valSliderB" style="color:var(--color-primary);">2</strong>
+          </label>
+          <input type="range" id="sliderB" min="1" max="3" value="2" oninput="recalc()">
+        </div>
+      </div>
+
+      <div class="calc-result-card">
+        <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#94A3B8;">
+          Total Ticket Checkout (With Instant Signed QR Pass)
+        </div>
+        <div class="calc-result-val" id="calcOutput">₹0</div>
+        <button class="btn-primary" style="width:100%;justify-content:center;" onclick="openLeadModalWithCalc()">
+          Generate Instant QR E-Ticket Pass
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Lead / Booking / Proofing Modal -->
+  <div class="modal-overlay" id="leadModal">
+    <div class="modal-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <h3 style="font-family:var(--font-accent);font-size:22px;">Generate Instant QR E-Ticket Pass</h3>
+        <button onclick="closeLeadModal()" style="background:none;border:none;color:inherit;font-size:18px;cursor:pointer;">✕</button>
+      </div>
+      <form onsubmit="submitLead(event)">
+        <div class="form-field">
+          <label>Full Name / Organization *</label>
+          <input type="text" id="leadName" required placeholder="e.g. Rahul Menon">
+        </div>
+        <div class="form-field">
+          <label>WhatsApp / Mobile Number *</label>
+          <input type="tel" id="leadPhone" required placeholder="919876543210">
+        </div>
+        <div class="form-field">
+          <label>Selected Configuration & Estimate</label>
+          <input type="text" id="leadDetail" readonly>
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%;justify-content:center;" id="leadSubmitBtn">
+          Confirm & Sync to Admin Hub
+        </button>
+      </form>
+      <div id="leadSuccessBox" style="display:none;margin-top:16px;padding:14px;background:var(--bg-canvas);border:1px solid var(--color-primary);border-radius:var(--radius);font-size:13px;"></div>
+    </div>
+  </div>
+
+  <a href="admin.html" class="admin-pill-floating">⚙️ Open Admin Command Center</a>
+  <a id="floatingWaBtn" href="https://wa.me/919061902295" target="_blank" class="wa-float-btn" title="Chat on WhatsApp">💬</a>
+
+  <script>
+    const ITEMS = [
+  {
+    "code": "PASS-EARLY",
+    "title": "Standard 2-Day Conference Pass",
+    "sub": "Full access to Main Stage keynotes, Expo Hall, Lunch & Official Afterparty",
+    "metric": "₹1,999 (Incl. GST)",
+    "badge": "42 PASSES LEFT",
+    "img": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "code": "PASS-WORKSHOP",
+    "title": "Pro All-Access + Hands-On Workshop Pass",
+    "sub": "Includes Day-2 Masterclasses (Cloudflare Edge AI + WebGL Shaders) + Swag Kit",
+    "metric": "₹3,499 (Incl. GST)",
+    "badge": "BEST SELLER",
+    "img": "https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "code": "PASS-VIP",
+    "title": "VIP Founder & Speaker Yacht Dinner Pass",
+    "sub": "Front-row seating, Speaker Lounge access + Private Sunset Backwater Cruise",
+    "metric": "₹6,999 (Incl. GST)",
+    "badge": "ONLY 8 LEFT",
+    "img": "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "code": "TALK-01",
+    "title": "Day 1 Keynote: Sub-Zero Latency Design Systems",
+    "sub": "10:00 AM • Grand Ballroom • Building Awwwards-grade interfaces on the edge",
+    "metric": "Main Stage",
+    "badge": "DAY 1 // 10:00",
+    "img": "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "code": "TALK-02",
+    "title": "Day 1 Panel: Autonomous Agents in Production",
+    "sub": "02:30 PM • Grand Ballroom • Real-world D1, Workers & LLM orchestration",
+    "metric": "AI Track",
+    "badge": "DAY 1 // 14:30",
+    "img": "https://images.unsplash.com/photo-1591115765373-5207764f72e7?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "code": "TALK-03",
+    "title": "Day 2 Masterclass: Interactive WebGL & Motion",
+    "sub": "11:00 AM • Studio Hall B • Hands-on 3-hour coding lab for creative devs",
+    "metric": "Workshop Lab",
+    "badge": "DAY 2 // 11:00",
+    "img": "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=800&q=80"
+  }
+];
+    let selectedItemTitle = ITEMS[0].title;
+    let currentCalcFormatted = '';
+
+    function renderGrid() {
+      const grid = document.getElementById('bentoGrid');
+      grid.innerHTML = ITEMS.map((item, idx) => `
+        <article class="bento-card" onclick="selectCard(${idx})">
+          <div class="bento-img-wrap">
+            <img src="${item.img}" alt="${item.title}" loading="lazy">
+            <span class="bento-badge">${item.badge}</span>
+          </div>
+          <div class="bento-body">
+            <div class="bento-code">${item.code}</div>
+            <div class="bento-title">${item.title}</div>
+            <div class="bento-sub">${item.sub}</div>
+            <div class="bento-footer">
+              <span>${item.metric}</span>
+              <span>Select →</span>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function recalc() {
+      const team = Number(document.getElementById('sliderA').value);
+      const hours = Number(document.getElementById('sliderB').value);
+      document.getElementById('valSliderA').textContent = team;
+      document.getElementById('valSliderB').textContent = hours;
+      const raw = Math.round(team * (hours === 1 ? 1999 : hours === 2 ? 3499 : 6999) * (team >= 3 ? 0.85 : 1));
+      currentCalcFormatted = '₹' + Number(raw).toLocaleString('en-IN');
+      document.getElementById('calcOutput').textContent = currentCalcFormatted;
+    }
+
+    function selectCard(idx) {
+      selectedItemTitle = ITEMS[idx].title + ' (' + ITEMS[idx].metric + ')';
+      openLeadModalWithCalc();
+    }
+
+    function openLeadModal() {
+      document.getElementById('leadDetail').value = selectedItemTitle + ' • Est: ' + currentCalcFormatted;
+      document.getElementById('leadSuccessBox').style.display = 'none';
+      document.getElementById('leadModal').classList.add('open');
+    }
+
+    function openLeadModalWithCalc() {
+      openLeadModal();
+    }
+
+    function closeLeadModal() {
+      document.getElementById('leadModal').classList.remove('open');
+    }
+
+    async function submitLead(e) {
+      e.preventDefault();
+      const name = document.getElementById('leadName').value.trim();
+      const phone = document.getElementById('leadPhone').value.trim();
+      const detail = document.getElementById('leadDetail').value.trim();
+      const entry = {
+        id: 'REQ-' + Math.floor(1000 + Math.random() * 9000),
+        name,
+        phone,
+        detail,
+        status: 'NEW INQUIRY',
+        amount: currentCalcFormatted,
+        createdAt: new Date().toISOString()
+      };
+
+      try {
+        const stored = JSON.parse(localStorage.getItem('bmad_leads_tpl-land-event-pass') || '[]');
+        stored.unshift(entry);
+        localStorage.setItem('bmad_leads_tpl-land-event-pass', JSON.stringify(stored));
+        fetch('/api/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(entry)
+        }).catch(() => {});
+      } catch (err) {}
+
+      const box = document.getElementById('leadSuccessBox');
+      box.style.display = 'block';
+      box.innerHTML = '✓ <strong>Confirmed (' + entry.id + ')!</strong> Your request is live in the <a href="admin.html" style="color:var(--color-primary);font-weight:700;">Admin Command Center</a>.';
+    }
+
+    renderGrid();
+    recalc();
+  </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+/* Extracted via tpl-tools-design-extractor (High-Energy Festival & Conference Pass (Neon Magenta & Midnight)) */
+:root {
+  --font-primary: 'Plus Jakarta Sans', sans-serif;
+  --font-accent: 'Syne', sans-serif;
+  --color-primary: #EC4899;
+  --brand-primary: var(--color-primary);
+  --color-dark: #090D16;
+  --brand-dark: var(--color-dark);
+  --bg-main: #090D16;
+  --bg-canvas: #111827;
+  --bg-sand: var(--bg-canvas);
+  --border-color: #1F2937;
+  --grid-gap-desktop: 24px 24px;
+  --grid-gap-mobile: 16px 16px;
+  --radius: 10px;
+  --ease-out-expo: cubic-bezier(0.25, 1, 0.5, 1);
+}

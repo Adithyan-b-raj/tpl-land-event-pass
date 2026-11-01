@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS leads (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  phone TEXT NOT NULL,
+  detail TEXT,
+  amount TEXT,
+  status TEXT DEFAULT 'NEW',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
