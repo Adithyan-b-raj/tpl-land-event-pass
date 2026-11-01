@@ -2,20 +2,404 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title data-wl-brand>SUPERNOVA // Gate Scanner & Attendance</title>
-  <link rel="stylesheet" href="theme-tokens.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-brand="brand_name">HYPERPULSE Turnstile Ops — Gate Scanner & Access Control</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <script src="whitelabel.js"></script>
   <style>
-    body { background: #07070C; color: #FFF; font-family: monospace; padding: 24px; }
-    .meter { background: #11111C; border: 2px solid #FF007A; padding: 20px; margin-bottom: 24px; }
+    :root {
+      --bg-base: #0a0112;
+      --bg-surface: #140224;
+      --bg-card: #1c0533;
+      --border-neon: rgba(0, 255, 102, 0.3);
+      --neon-green: #00ff66;
+      --neon-pink: #ff007f;
+      --neon-red: #ff3333;
+      --text-main: #fff;
+      --text-muted: #d8b4fe;
+      --font-poster: 'Cabinet Grotesk', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+      --sidebar-width: 250px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-mono);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: var(--sidebar-width);
+      background: var(--bg-surface);
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+    }
+    .sidebar-header {
+      padding: 20px;
+      font-family: var(--font-poster);
+      font-size: 16px;
+      font-weight: 900;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--neon-green);
+    }
+    .sidebar-nav {
+      list-style: none;
+      padding: 16px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+      font-size: 12px;
+    }
+    .nav-item {
+      padding: 10px 12px;
+      border-radius: 4px;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-item:hover, .nav-item.active {
+      background: rgba(0, 255, 102, 0.1);
+      color: #fff;
+    }
+    .nav-item.active { color: var(--neon-green); font-weight: 700; }
+
+    .main-wrap {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .topbar {
+      height: 64px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+    }
+    .content-body { padding: 28px; flex: 1; }
+
+    /* METRICS */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+    @media (max-width: 1024px) {
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      padding: 18px;
+    }
+    .metric-title { font-size: 11px; color: var(--text-muted); margin-bottom: 6px; }
+    .metric-val { font-size: 24px; font-weight: 700; color: #fff; }
+
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* GATE SCANNER BOX */
+    .scanner-box {
+      background: var(--bg-card);
+      border: 2px solid var(--border-neon);
+      border-radius: 8px;
+      padding: 36px;
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .scan-input {
+      width: 100%;
+      background: #000;
+      border: 2px solid var(--neon-green);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 18px;
+      padding: 14px 20px;
+      border-radius: 6px;
+      margin-bottom: 24px;
+      text-align: center;
+      letter-spacing: 0.1em;
+      outline: none;
+    }
+
+    .scan-feedback-screen {
+      min-height: 160px;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      margin-bottom: 24px;
+      background: #000;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .screen-valid {
+      background: rgba(0, 255, 102, 0.15);
+      border-color: var(--neon-green);
+      color: var(--neon-green);
+    }
+    .screen-invalid {
+      background: rgba(255, 0, 127, 0.15);
+      border-color: var(--neon-pink);
+      color: var(--neon-pink);
+    }
+    .feedback-status {
+      font-family: var(--font-poster);
+      font-size: 32px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+    .feedback-attendee { font-size: 16px; color: #fff; }
+
+    .test-buttons-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 10px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-green { background: var(--neon-green); color: #000; }
+    .btn-red { background: var(--neon-pink); color: #fff; }
+
+    /* HEATMAP */
+    .heatmap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 860px) {
+      .heatmap-grid { grid-template-columns: 1fr; }
+    }
+    .stage-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 24px;
+    }
+
+    .toast-box {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--neon-green);
+      color: #fff;
+      padding: 12px 18px;
+      font-size: 12px;
+      display: none;
+      z-index: 999;
+    }
   </style>
 </head>
-<body data-layout-archetype="kinetic-poster-admin">
-  <h2><span data-wl-brand>SUPERNOVA</span> — Gate Check-In & Live Venue Capacity</h2>
-  <div class="meter">
-    <div style="font-size:14px; color:#FF007A;">CURRENT VENUE OCCUPANCY</div>
-    <div style="font-size:36px; font-weight:700;">1,420 / 2,000 TICKETS SCANNED</div>
-    <div style="color:#00F0FF; margin-top:8px;">● GATE 01: FLOWING NORMALLY (Avg scan: 1.2s)</div>
+<body>
+
+  <aside class="sidebar">
+    <div class="sidebar-header" data-brand="brand_name">
+      HYPERPULSE GATE OPS
+    </div>
+    <ul class="sidebar-nav">
+      <li class="nav-item active" onclick="switchTab('scanner', this)">
+        <span>🎟️</span>
+        <span>Turnstile Scanner</span>
+      </li>
+      <li class="nav-item" onclick="switchTab('heatmap', this)">
+        <span>🔥</span>
+        <span>Stage Capacity Heatmap</span>
+      </li>
+      <li class="nav-item" onclick="switchTab('roster', this)">
+        <span>📋</span>
+        <span>Attendee Roster</span>
+      </li>
+    </ul>
+    <div style="padding: 16px; font-size: 11px; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.1);">
+      GATE: NORTH TURNSTILE 01
+    </div>
+  </aside>
+
+  <div class="main-wrap">
+    <header class="topbar">
+      <div style="font-weight: 700; color: #fff;" id="pageTitle">
+        FAST GATE SCANNER // TURNSTILE 01
+      </div>
+      <a href="index.html" class="btn btn-green" target="_blank">
+        Pass Portal &rarr;
+      </a>
+    </header>
+
+    <main class="content-body">
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-title">Attendees Inside Venue</div>
+          <div class="metric-val" id="metricInside">8,420</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">VIP Admitted</div>
+          <div class="metric-val">1,140</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Duplicate Tickets Blocked</div>
+          <div class="metric-val" style="color: var(--neon-pink);">18</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Gate Velocity</div>
+          <div class="metric-val" style="color: var(--neon-green);">42 / min</div>
+        </div>
+      </div>
+
+      <!-- TAB 1: SCANNER -->
+      <section class="tab-pane active" id="tabScanner">
+        <div class="scanner-box">
+          <input type="text" class="scan-input" id="barcodeScanInput" placeholder="Scan Barcode / Type Pass Code..." autofocus onkeydown="handleScanKey(event)">
+
+          <div class="scan-feedback-screen" id="feedbackScreen">
+            <div class="feedback-status" id="feedbackStatus">READY TO SCAN</div>
+            <div class="feedback-attendee" id="feedbackAttendee">Point handheld laser or click quick test below</div>
+          </div>
+
+          <div class="test-buttons-row">
+            <button class="btn btn-green" onclick="simulateScan('VALID_VIP')">⚡ Test Valid VIP Pass</button>
+            <button class="btn btn-red" onclick="simulateScan('DUPLICATE')">⚠️ Test Duplicate Pass</button>
+            <button class="btn" style="background: #333; color: #fff;" onclick="simulateScan('INVALID')">❌ Test Invalid Code</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: HEATMAP -->
+      <section class="tab-pane" id="tabHeatmap">
+        <div class="heatmap-grid">
+          <div class="stage-card">
+            <div style="font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 8px;">Main Horizon Stage</div>
+            <div style="font-size: 28px; font-weight: 700; color: var(--neon-green); margin-bottom: 12px;">8,420 / 10,000</div>
+            <div style="font-size: 12px; color: var(--text-muted);">84.2% Capacity · Normal Crowd Flow</div>
+          </div>
+          <div class="stage-card">
+            <div style="font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 8px;">Cyber Dome (VR Stage)</div>
+            <div style="font-size: 28px; font-weight: 700; color: var(--neon-pink); margin-bottom: 12px;">1,840 / 2,000</div>
+            <div style="font-size: 12px; color: var(--neon-pink);">92% Capacity · Throttle Gate Entry!</div>
+          </div>
+          <div class="stage-card">
+            <div style="font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 8px;">The Warehouse (Indoor)</div>
+            <div style="font-size: 28px; font-weight: 700; color: var(--neon-green); margin-bottom: 12px;">2,100 / 3,000</div>
+            <div style="font-size: 12px; color: var(--text-muted);">70% Capacity · Stable</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: ROSTER -->
+      <section class="tab-pane" id="tabRoster">
+        <div style="background: var(--bg-card); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 20px;">
+          <div style="margin-bottom: 16px; font-weight: 700;">Recent Admitted Attendees</div>
+          <div style="font-size: 13px; color: var(--text-muted); line-height: 2;">
+            ● Zoya Akhtar · VIP Backstage · 18:24:10 · North Gate 01<br>
+            ● Tariq Mansur · VIP Backstage · 18:22:45 · VIP Fast Turnstile<br>
+            ● Nikhil Kamath · GA Weekend Pass · 18:20:12 · North Gate 03
+          </div>
+        </div>
+      </section>
+    </main>
   </div>
+
+  <div class="toast-box" id="toastNotice"></div>
+
+  <script>
+    function handleScanKey(e) {
+      if (e.key === 'Enter') {
+        const val = e.target.value.trim();
+        if (val.includes('VIP')) simulateScan('VALID_VIP');
+        else if (val.includes('DUP')) simulateScan('DUPLICATE');
+        else simulateScan('VALID_VIP');
+        e.target.value = '';
+      }
+    }
+
+    function simulateScan(type) {
+      const scr = document.getElementById('feedbackScreen');
+      const st = document.getElementById('feedbackStatus');
+      const att = document.getElementById('feedbackAttendee');
+
+      if (type === 'VALID_VIP') {
+        scr.className = 'scan-feedback-screen screen-valid';
+        st.textContent = 'ACCESS GRANTED // VIP';
+        att.textContent = 'Attendee: Zoya Akhtar · Backstage & Artist Deck';
+        playBeep(800, 150);
+        showToast('Turnstile Unlocked for 5 seconds');
+      } else if (type === 'DUPLICATE') {
+        scr.className = 'scan-feedback-screen screen-invalid';
+        st.textContent = 'DUPLICATE TICKET BLOCKED';
+        att.textContent = 'Flag: Pass already checked in at 18:22:45 (Gate 02)';
+        playBeep(250, 400);
+        showToast('SECURITY ALERT: Turnstile Locked');
+      } else {
+        scr.className = 'scan-feedback-screen screen-invalid';
+        st.textContent = 'INVALID BARCODE';
+        att.textContent = 'Code not found in event database';
+        playBeep(200, 300);
+      }
+    }
+
+    function playBeep(freq, duration) {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.frequency.value = freq;
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        setTimeout(() => { osc.stop(); audioCtx.close(); }, duration);
+      } catch (err) {}
+    }
+
+    function switchTab(tab, el) {
+      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      el.classList.add('active');
+
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      if (tab === 'scanner') {
+        document.getElementById('tabScanner').classList.add('active');
+        document.getElementById('pageTitle').textContent = 'FAST GATE SCANNER // TURNSTILE 01';
+      } else if (tab === 'heatmap') {
+        document.getElementById('tabHeatmap').classList.add('active');
+        document.getElementById('pageTitle').textContent = 'STAGE DENSITY & CAPACITY HEATMAP';
+      } else if (tab === 'roster') {
+        document.getElementById('tabRoster').classList.add('active');
+        document.getElementById('pageTitle').textContent = 'PASS ALLOCATIONS & CHECK-IN LOGS';
+      }
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toastNotice');
+      t.textContent = msg;
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 3500);
+    }
+  </script>
 </body>
 </html>

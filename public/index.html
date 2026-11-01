@@ -1,202 +1,591 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-wl-brand>SUPERNOVA 2026 // AUDIO & DESIGN SUMMIT</title>
+  <title data-brand="brand_name">HYPERPULSE // 04 — Electronic Sound & Visual Horizon</title>
+  <meta name="description" content="3 Days. 4 Stages. 70+ International Artists. Experience cutting-edge electronic acoustics on the coastal cliffs of Goa.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="theme-tokens.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
   <script src="whitelabel.js"></script>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--bg-main, #07070C);
-      color: #FFF;
-      font-family: var(--font-primary, 'Space Grotesk', sans-serif);
-      overflow-x: hidden;
-    }
-    .wristband-bar {
-      background: var(--color-primary, #FF007A);
-      color: #000;
-      font-family: var(--font-mono, monospace);
-      font-size: 11px;
-      font-weight: 700;
-      padding: 8px 24px;
-      display: flex;
-      justify-content: space-between;
-      letter-spacing: 1px;
-    }
-    .hero-poster {
-      padding: 60px 32px 40px;
-      text-align: center;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .hero-poster h1 {
-      font-family: var(--font-accent, 'Syne', sans-serif);
-      font-size: clamp(48px, 10vw, 110px);
-      line-height: 0.92;
-      text-transform: uppercase;
-      font-weight: 800;
-      letter-spacing: -2px;
-      margin-bottom: 24px;
-      color: #FFF;
-      text-shadow: 4px 4px 0px #00F0FF;
-    }
-    .marquee-tape {
-      background: #00F0FF;
-      color: #000;
-      padding: 10px 0;
-      white-space: nowrap;
-      overflow: hidden;
-      font-family: var(--font-mono);
-      font-weight: 700;
-      font-size: 13px;
-      letter-spacing: 2px;
-      transform: rotate(-1deg);
-      margin: 30px -20px;
+    :root {
+      --bg-base: #0a0014;
+      --bg-surface: #140024;
+      --bg-card: rgba(26, 0, 48, 0.7);
+      --border-neon: rgba(0, 255, 102, 0.3);
+      --neon-green: #00ff66;
+      --neon-pink: #ff007f;
+      --neon-purple: #9d00ff;
+      --neon-cyan: #00f0ff;
+      --text-main: #ffffff;
+      --text-muted: #d8b4fe;
+      --font-display: 'Syne', sans-serif;
+      --font-poster: 'Cabinet Grotesk', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+      --container-max: 1240px;
     }
 
-    /* 3-Stage Agenda Grid */
-    .agenda-section {
-      max-width: 1100px;
-      margin: 60px auto;
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.5;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(157, 0, 255, 0.25) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(0, 255, 102, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(255, 0, 127, 0.15) 0%, transparent 50%);
+      background-attachment: fixed;
+    }
+
+    .container {
+      max-width: var(--container-max);
+      margin: 0 auto;
       padding: 0 24px;
     }
-    .stage-filters {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 30px;
-    }
-    .stage-btn {
-      background: #11111C;
-      border: 2px solid #292940;
-      color: #FFF;
-      padding: 10px 20px;
-      font-family: var(--font-mono);
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .stage-btn.active {
-      background: var(--color-primary, #FF007A);
-      border-color: var(--color-primary, #FF007A);
-      color: #000;
-    }
-    .session-row {
-      background: #11111C;
-      border-left: 4px solid var(--color-primary);
-      padding: 20px 24px;
-      margin-bottom: 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .session-time { font-family: var(--font-mono); color: #00F0FF; font-size: 14px; font-weight: 700; width: 140px; }
-    .session-title { font-size: 18px; font-weight: 700; }
-    .session-speaker { color: #94A3B8; font-size: 13px; margin-top: 4px; }
 
-    /* Perforated QR Pass Stub */
-    .ticket-stub {
-      max-width: 580px;
-      margin: 60px auto 100px;
-      background: #FFF;
+    /* KINETIC MARQUEE */
+    .marquee-strip {
+      background: var(--neon-green);
       color: #000;
-      border-radius: 8px;
+      font-family: var(--font-poster);
+      font-weight: 900;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      padding: 8px 0;
+      white-space: nowrap;
       overflow: hidden;
-      position: relative;
-      box-shadow: 10px 10px 0px var(--color-primary, #FF007A);
-    }
-    .stub-tear {
-      border-top: 2px dashed #000;
-      position: relative;
-      margin: 20px 0;
-    }
-    .stub-body { padding: 30px; }
-    .qr-box {
-      width: 120px;
-      height: 120px;
-      background: #000;
       display: flex;
+    }
+    .marquee-content {
+      display: flex;
+      gap: 40px;
+      animation: marquee 20s linear infinite;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* NAVBAR */
+    .navbar {
+      height: 76px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      background: rgba(10, 0, 20, 0.85);
+      backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .brand-logo {
+      font-family: var(--font-poster);
+      font-size: 22px;
+      font-weight: 900;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand-tag {
+      background: var(--neon-pink);
+      color: #fff;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .nav-menu {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+      font-family: var(--font-mono);
+      font-size: 13px;
+    }
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-link:hover { color: var(--neon-green); }
+
+    .btn {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: #00F0FF;
-      font-family: monospace;
-      font-size: 10px;
+      padding: 10px 24px;
+      font-family: var(--font-poster);
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      border: none;
+    }
+    .btn-green {
+      background: var(--neon-green);
+      color: #000;
+      box-shadow: 0 0 25px rgba(0, 255, 102, 0.4);
+    }
+    .btn-green:hover {
+      background: #00cc52;
+      box-shadow: 0 0 35px rgba(0, 255, 102, 0.7);
+      transform: translateY(-2px);
+    }
+    .btn-pink {
+      background: var(--neon-pink);
+      color: #fff;
+      box-shadow: 0 0 25px rgba(255, 0, 127, 0.4);
+    }
+
+    /* HERO SECTION */
+    .hero-section {
+      padding: 80px 0 60px;
       text-align: center;
-      padding: 10px;
+      position: relative;
+    }
+    .hero-date-chip {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--neon-cyan);
+      border: 1px solid var(--neon-cyan);
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+      background: rgba(0, 240, 255, 0.1);
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 8vw, 100px);
+      font-weight: 800;
+      line-height: 0.95;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+    }
+    .hero-title-glitch {
+      color: var(--neon-green);
+      text-shadow: 2px 2px var(--neon-pink);
+    }
+    .hero-desc {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 36px;
+    }
+
+    /* COUNTDOWN TIMER */
+    .countdown-grid {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .countdown-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 16px 20px;
+      min-width: 90px;
+      text-align: center;
+    }
+    .countdown-num {
+      font-family: var(--font-mono);
+      font-size: 36px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .countdown-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* AGENDA & TIMETABLE */
+    .agenda-section {
+      padding: 80px 0;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 5vw, 54px);
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+    .day-filter-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+    .day-tab {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 12px 24px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+    .day-tab.active {
+      background: var(--neon-pink);
+      border-color: var(--neon-pink);
+      box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
+    }
+
+    .lineup-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .artist-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .artist-card:hover {
+      border-color: var(--neon-green);
+      transform: translateY(-4px);
+    }
+    .artist-time {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--neon-green);
+      margin-bottom: 8px;
+    }
+    .artist-name {
+      font-family: var(--font-poster);
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .artist-stage {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .btn-remind {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* PASS TIERS */
+    .tiers-section {
+      padding: 80px 0;
+    }
+    .tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 900px) {
+      .tiers-grid { grid-template-columns: 1fr; }
+    }
+    .tier-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 36px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .tier-card.featured {
+      border-color: var(--neon-green);
+      box-shadow: 0 0 35px -5px rgba(0, 255, 102, 0.3);
+    }
+    .tier-title {
+      font-family: var(--font-poster);
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .tier-price {
+      font-family: var(--font-mono);
+      font-size: 38px;
+      font-weight: 700;
+      color: var(--neon-green);
+      margin-bottom: 20px;
+    }
+
+    /* PASS WALLET MODAL */
+    .wallet-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .wallet-modal-overlay.open { display: flex; }
+    .wallet-pass-ticket {
+      background: #15002b;
+      border: 2px solid var(--neon-green);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 440px;
+      padding: 32px;
+      position: relative;
+      box-shadow: 0 0 50px rgba(0, 255, 102, 0.3);
+      text-align: center;
+    }
+    .pass-qr-box {
+      background: #fff;
+      padding: 16px;
+      border-radius: 8px;
+      display: inline-block;
+      margin: 20px 0;
+    }
+    .pass-qr-mock {
+      width: 160px;
+      height: 160px;
+      background: url('https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=HP-9941-VIP') center/contain no-repeat;
+    }
+
+    /* TOAST */
+    .toast-box {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #140024;
+      border: 1px solid var(--neon-green);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      padding: 14px 22px;
+      border-radius: 6px;
+      display: none;
+      z-index: 1001;
     }
   </style>
 </head>
-<body data-layout-archetype="kinetic-poster-festival-matrix">
-  <div class="wristband-bar">
-    <span>SUPERNOVA // HYPERPORT DOCK 09</span>
-    <span>NOV 24 – 26, 2026</span>
-    <span>GATE ACCESS: LEVEL 01</span>
+<body>
+
+  <!-- KINETIC MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-content">
+      <span>HYPERPULSE // 04 FESTIVAL</span>
+      <span>DEC 18-20, 2026</span>
+      <span>VAGATOR BLUFF, GOA</span>
+      <span>4 STAGES // 70+ ARTISTS</span>
+      <span>TICKETS SELLING FAST</span>
+      <span>HYPERPULSE // 04 FESTIVAL</span>
+      <span>DEC 18-20, 2026</span>
+    </div>
   </div>
 
-  <section class="hero-poster">
-    <h1 data-wl-tagline>SUPERNOVA FESTIVAL 2026</h1>
-    <p style="font-size:20px; color:#A5B4FC; max-width:680px; margin:0 auto;">3 Days • 48 International Producers & Creative Coders • 3 Immersive Audio Stages</p>
+  <!-- NAVIGATION -->
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a href="#" class="brand-logo" data-brand="brand_name">
+        <span>HYPERPULSE</span>
+        <span class="brand-tag">04 EDITION</span>
+      </a>
+      <ul class="nav-menu">
+        <li><a href="#lineup" class="nav-link">Lineup & Agenda</a></li>
+        <li><a href="#passes" class="nav-link">Festival Passes</a></li>
+        <li><a href="admin.html" class="nav-link" style="color: var(--neon-green);">Gate Scanner Hub &rarr;</a></li>
+      </ul>
+      <button class="btn btn-green" onclick="openPassModal('tier_ga', 'GA Weekend Pass')">Get Passes</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero-section">
+    <div class="container">
+      <span class="hero-date-chip">⚡ DECEMBER 18 — 20, 2026 // GOA COASTLINE</span>
+      <h1 class="hero-title">
+        THE AUDIOVISUAL <br><span class="hero-title-glitch">SYNTHESIS</span>
+      </h1>
+      <p class="hero-desc">
+        Immerse in three days of seismic bass, modular ambient synthesis, and transcendent visual mapping on the edge of the Arabian Sea.
+      </p>
+
+      <div class="countdown-grid">
+        <div class="countdown-card">
+          <div class="countdown-num" id="cdDays">47</div>
+          <div class="countdown-label">Days</div>
+        </div>
+        <div class="countdown-card">
+          <div class="countdown-num" id="cdHours">14</div>
+          <div class="countdown-label">Hours</div>
+        </div>
+        <div class="countdown-card">
+          <div class="countdown-num" id="cdMins">28</div>
+          <div class="countdown-label">Mins</div>
+        </div>
+        <div class="countdown-card">
+          <div class="countdown-num" id="cdSecs">51</div>
+          <div class="countdown-label">Secs</div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 16px; justify-content: center;">
+        <a href="#passes" class="btn btn-green">Secure Festival Pass</a>
+        <a href="#lineup" class="btn btn-pink">Explore Timetable</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- AGENDA & LINEUP -->
+  <section class="agenda-section" id="lineup">
+    <div class="container">
+      <h2 class="section-title">Festival Timetable</h2>
+      <div class="day-filter-tabs">
+        <button class="day-tab active" onclick="switchDay(1, this)">Day 01: Modular Opening</button>
+        <button class="day-tab" onclick="switchDay(2, this)">Day 02: Cyber Peak Rave</button>
+        <button class="day-tab" onclick="switchDay(3, this)">Day 03: Sunrise Ambient</button>
+      </div>
+
+      <div class="lineup-grid" id="lineupGrid">
+        <div class="artist-card">
+          <div class="artist-time">22:00 - 00:30 // MAIN STAGE</div>
+          <div class="artist-name">RECONDITE (LIVE)</div>
+          <div class="artist-stage">Melodic Techno / Berlin</div>
+          <button class="btn-remind" onclick="setReminder('Recondite')">🔔 Add to Schedule</button>
+        </div>
+        <div class="artist-card">
+          <div class="artist-time">00:30 - 03:00 // CYBER DOME</div>
+          <div class="artist-name">PAULA TEMPLE</div>
+          <div class="artist-stage">Industrial Heavy Techno / UK</div>
+          <button class="btn-remind" onclick="setReminder('Paula Temple')">🔔 Add to Schedule</button>
+        </div>
+        <div class="artist-card">
+          <div class="artist-time">19:30 - 21:30 // THE WAREHOUSE</div>
+          <div class="artist-name">KAS:ST</div>
+          <div class="artist-stage">Cinematic Techno / Paris</div>
+          <button class="btn-remind" onclick="setReminder('Kas:st')">🔔 Add to Schedule</button>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <div class="marquee-tape">
-    ✦ LIVE AUDIO MATRIX ✦ WEBGL WORKSHOPS ✦ MODULAR SYNTH BATTLE ✦ 3 STAGES ✦ 24-HOUR ACCESS PASSES LIVE
-  </div>
+  <!-- FESTIVAL PASSES -->
+  <section class="tiers-section" id="passes">
+    <div class="container">
+      <h2 class="section-title">Select Your Pass</h2>
+      <div class="tiers-grid">
+        <!-- SINGLE DAY -->
+        <div class="tier-card">
+          <div>
+            <div class="tier-title">Single Day Pass</div>
+            <div class="tier-price">₹3,999</div>
+            <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 24px;">General admission access for any single festival day.</p>
+          </div>
+          <button class="btn btn-green" onclick="openPassModal('tier_single', 'Single Day Pass')">Select Pass &rarr;</button>
+        </div>
 
-  <section class="agenda-section">
-    <div class="stage-filters">
-      <button class="stage-btn active" onclick="filterStage('all')">ALL STAGES</button>
-      <button class="stage-btn" onclick="filterStage('stage1')">STAGE 01: HYPER-MAIN</button>
-      <button class="stage-btn" onclick="filterStage('stage2')">STAGE 02: CODE LAB</button>
-    </div>
+        <!-- 3-DAY WEEKEND (FEATURED) -->
+        <div class="tier-card featured">
+          <div>
+            <span style="font-family: var(--font-mono); font-size: 10px; color: var(--neon-green); font-weight: 700; text-transform: uppercase;">Most Popular</span>
+            <div class="tier-title">3-Day Weekend GA</div>
+            <div class="tier-price">₹8,999</div>
+            <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 24px;">Full 3-day access to all 4 stages and free water stations.</p>
+          </div>
+          <button class="btn btn-green" onclick="openPassModal('tier_ga', '3-Day Weekend GA')">Select Pass &rarr;</button>
+        </div>
 
-    <div class="session-row">
-      <div class="session-time">18:00 – 19:30</div>
-      <div>
-        <div class="session-title">Spatial Audio & Live Shader Synthesis</div>
-        <div class="session-speaker">Elena Rostova (Berlin) • Stage 01</div>
+        <!-- VIP BACKSTAGE -->
+        <div class="tier-card">
+          <div>
+            <div class="tier-title">VIP Backstage & Deck</div>
+            <div class="tier-price">₹19,999</div>
+            <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 24px;">Elevated viewing decks, private bars, express turnstile, and AC lounge.</p>
+          </div>
+          <button class="btn btn-pink" onclick="openPassModal('tier_vip', 'VIP Backstage Pass')">Select VIP Pass &rarr;</button>
+        </div>
       </div>
-      <button class="stage-btn" style="padding:6px 12px; font-size:12px;" onclick="alert('Session added to your wallet schedule')">+ SCHEDULE</button>
-    </div>
-
-    <div class="session-row">
-      <div class="session-time">20:00 – 21:30</div>
-      <div>
-        <div class="session-title">Generative GPU Shaders on Cloudflare Edge</div>
-        <div class="session-speaker">Kenji Sato (Tokyo) • Stage 02</div>
-      </div>
-      <button class="stage-btn" style="padding:6px 12px; font-size:12px;" onclick="alert('Session added to your wallet schedule')">+ SCHEDULE</button>
     </div>
   </section>
 
-  <!-- Live Perforated QR Pass Stub -->
-  <div class="ticket-stub">
-    <div class="stub-body">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-        <div>
-          <div style="font-family:var(--font-mono); font-size:10px; letter-spacing:1px; color:#FF007A;">ADMIT ONE PASS</div>
-          <div style="font-family:var(--font-accent); font-size:26px; font-weight:800;" data-wl-brand>SUPERNOVA 2026</div>
-          <div style="font-size:13px; color:#555; margin-top:4px;">VIP FULL-ACCESS + BACKSTAGE LOUNGE</div>
-        </div>
-        <div class="qr-box">
-          [SVG GATE QR // #SNV-99128]
-        </div>
+  <!-- WALLET PASS MODAL -->
+  <div class="wallet-modal-overlay" id="walletModal" onclick="closeWalletModal(event)">
+    <div class="wallet-pass-ticket" onclick="event.stopPropagation()">
+      <button style="position: absolute; top: 16px; right: 20px; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer;" onclick="closeWalletModal()">&times;</button>
+      <div style="font-family: var(--font-mono); font-size: 12px; color: var(--neon-green);">HYPERPULSE // DIGITAL WALLET PASS</div>
+      <h3 style="font-family: var(--font-poster); font-size: 26px; margin: 8px 0;" id="passTierTitle">3-Day Weekend GA</h3>
+      <div style="font-family: var(--font-mono); font-size: 13px; color: #fff;" id="passAttendee">Attendee: Zoya Akhtar</div>
+
+      <div class="pass-qr-box">
+        <div class="pass-qr-mock"></div>
+        <div style="font-family: var(--font-mono); font-size: 11px; color: #000; font-weight: 700; margin-top: 6px;" id="passCodeTxt">HP-9941-VIP</div>
       </div>
-      <div class="stub-tear"></div>
-      <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:11px;">
-        <span>HOLDER: GUEST ATTENDEE</span>
-        <span>GATE: ZONE-A</span>
-        <span>HASH: #98A1-FF7A</span>
-      </div>
+
+      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">
+        Screenshot or present this QR barcode at the North Turnstile Scanner.
+      </p>
+      <button class="btn btn-green" style="width: 100%;" onclick="closeWalletModal(); showToast('Pass saved to Apple/Google Wallet cache!');">
+        Download Wallet Pass (PDF)
+      </button>
     </div>
   </div>
+
+  <div class="toast-box" id="toastNotice"></div>
 
   <script>
-    function filterStage(s) {
-      document.querySelectorAll('.stage-btn').forEach(b => b.classList.remove('active'));
-      event.target.classList.add('active');
+    function openPassModal(tierId, tierName) {
+      const name = prompt("Enter attendee name for ticket pass:", "Zoya Akhtar");
+      if (!name) return;
+      document.getElementById('passTierTitle').textContent = tierName;
+      document.getElementById('passAttendee').textContent = "Attendee: " + name;
+      document.getElementById('passCodeTxt').textContent = "HP-" + Math.floor(Math.random() * 8999 + 1000) + "-PASS";
+      document.getElementById('walletModal').classList.add('open');
+    }
+    function closeWalletModal(e) {
+      document.getElementById('walletModal').classList.remove('open');
+    }
+
+    function switchDay(d, el) {
+      document.querySelectorAll('.day-tab').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function setReminder(artist) {
+      showToast(`Reminder set for ${artist}! Push alert scheduled 15m before stage time.`);
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toastNotice');
+      t.textContent = msg;
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 4000);
     }
   </script>
 </body>
