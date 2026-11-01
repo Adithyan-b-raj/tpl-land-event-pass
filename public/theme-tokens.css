@@ -1,17 +1,31 @@
-/* Extracted via tpl-tools-design-extractor (High-Energy Festival & Conference Pass (Neon Magenta & Midnight)) */
+/* ==========================================================================
+   BMAD Normalized Design Tokens & Movement Blueprint (theme-tokens.css)
+   Movement  : [I] Kinetic Poster & Festival Schedule Matrix
+   Archetype : Swiss Kinetic Typographic Poster & Multi-Stage Summit Pass (Figma Config / Boiler Room)
+   Reference : https://config.figma.com
+   Contract  : whitelabel-and-showroom-contract.md §2 + design-movements-and-layout-blueprints.md
+   ========================================================================== */
+
 :root {
-  --font-primary: 'Plus Jakarta Sans', sans-serif;
+  --font-primary: 'Space Grotesk', sans-serif;
   --font-accent: 'Syne', sans-serif;
-  --color-primary: #EC4899;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-primary: #FF007A;
   --brand-primary: var(--color-primary);
-  --color-dark: #090D16;
+
+  --color-dark: #07070C;
   --brand-dark: var(--color-dark);
-  --bg-main: #090D16;
-  --bg-canvas: #111827;
+
+  --bg-main: #07070C;
+  --bg-canvas: #11111C;
   --bg-sand: var(--bg-canvas);
-  --border-color: #1F2937;
-  --grid-gap-desktop: 24px 24px;
-  --grid-gap-mobile: 16px 16px;
-  --radius: 10px;
+
+  --border-color: #292940;
+  --border-structural: 2px solid #292940;
+  --shadow-token: 5px 5px 0px #00F0FF;
+  --grid-gap-desktop: 16px;
+  --grid-gap-mobile: 12px;
+  --radius: 4px;
   --ease-out-expo: cubic-bezier(0.25, 1, 0.5, 1);
 }
